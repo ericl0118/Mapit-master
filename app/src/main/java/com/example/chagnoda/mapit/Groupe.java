@@ -11,7 +11,7 @@ import android.graphics.Color;
  */
 public class Groupe {
 
-    private String groupename;
+  
 
     private int groupesize;
 
