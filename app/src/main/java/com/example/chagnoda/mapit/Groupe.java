@@ -27,6 +27,8 @@ public class Groupe {
 
     private ArrayList<Discussion> discussions;
 
+    private String groupename;
+
     public Groupe(){}
 
     public Groupe(String name , int size , int color , Location location , Profile creator){
