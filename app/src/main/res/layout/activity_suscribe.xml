@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Create your account:"
+        android:id="@+id/textView2"
+        android:layout_marginTop="23dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/textView4"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="28dp"
+        android:layout_below="@+id/textView2" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Choose a User Name"
+        android:ems="10"
+        android:id="@+id/usernamebox"
+        android:layout_alignTop="@+id/textView4"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/textView2"
+        android:textColor="#bab9b9"
+        android:textIsSelectable="false" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/emailbox"
+        android:text="Enter your E-mail adresse"
+        android:layout_marginTop="31dp"
+        android:layout_below="@+id/usernamebox"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/textView2"
+        android:textColor="#bab9b9" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Choose a Password"
+        android:ems="10"
+        android:id="@+id/passwordbox"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/emailbox"
+        android:textColor="#bab9b9" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Confirmed your Password"
+        android:ems="10"
+        android:id="@+id/confirmedpasswordbox"
+        android:layout_marginTop="42dp"
+        android:layout_below="@+id/passwordbox"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/passwordbox"
+        android:textColor="#bab9b9" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create Account"
+        android:id="@+id/suscribebutton"
+        android:layout_marginTop="48dp"
+        android:singleLine="true"
+        android:layout_below="@+id/confirmedpasswordbox"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
