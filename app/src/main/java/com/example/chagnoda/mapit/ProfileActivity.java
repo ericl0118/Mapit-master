@@ -4,17 +4,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 /**
- * Created by chagnoda on 16-03-21.
+ * Created by chengli on 2016-03-21.
  */
-public class activity_main extends AppCompatActivity {
-
+public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-
-
-
+        setContentView(R.layout.activity_profile);
     }
 }
