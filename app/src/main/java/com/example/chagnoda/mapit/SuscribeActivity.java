@@ -88,13 +88,13 @@ public class SuscribeActivity extends AppCompatActivity implements View.OnClickL
         String confirmed_password = confirmed_password_view.getText().toString();
         profilepicture_view = (ImageButton) findViewById(R.id.profileimagebutton);
         //Image profilepicture = profilepicture_view.get();
-
         // note: a implementer, condition d'acceptation d'un nouvel acompte
         Profile new_user = new Profile(username,email,password);
         Firebase ref = new Firebase("https://sizzling-inferno-6141.firebaseio.com/Mapit/Profiles");
-        ref.child(email).setValue(new_user);
+        ref.child(username).setValue(new_user);
         // a implementer, ajouter le profil a firebase
         startActivity(new Intent("com.example.chagnoda.mapit.MainActivity"));
 
     }
+
 }
