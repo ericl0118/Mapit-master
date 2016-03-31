@@ -5,8 +5,8 @@ import android.media.Image;
  * Created by David on 22/03/2016.
  */
 public class Profile {
-    private String username;
     private String email;
+    private String username;
     private String password;
     private Image profilepicture;
     private Profile[] friends;
@@ -25,6 +25,8 @@ public class Profile {
     public String getUserName(){
         return this.username;
     }
+    public String getPassword(){return this.password;}
+    public String getEmail(){return this.email; }
     public Image getProfilePicture(){return this.profilepicture;}
     public void setUserName(String newUserName) {this.username = newUserName;}
     public void setProfilePicture(Image newProfilePicture){this.profilepicture = newProfilePicture;}
