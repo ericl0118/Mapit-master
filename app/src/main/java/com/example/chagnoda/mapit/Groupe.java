@@ -19,6 +19,10 @@ public class Groupe {
 
     private Location location;
 
+    private double latitude;
+
+    private double longitude;
+
     private Profile creator;
 
     private ArrayList<Profile> members;

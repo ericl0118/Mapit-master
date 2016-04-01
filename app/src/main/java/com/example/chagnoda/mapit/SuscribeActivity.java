@@ -33,6 +33,8 @@ public class SuscribeActivity extends AppCompatActivity implements View.OnClickL
     ImageButton profilepicture_view;
     ImageButton imagePick;
     private final static int SELECT_PHOTO = 12345;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,21 +85,34 @@ public class SuscribeActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        Toast.makeText(getApplicationContext(),"Focntionne!",Toast.LENGTH_SHORT).show();
+
         username_view = (TextView)findViewById(R.id.usernamebox);
-        String username = username_view.getText().toString();
+        final String username = username_view.getText().toString();
         email_view = (TextView)findViewById(R.id.emailbox);
         String email = email_view.getText().toString();
         password_view = (TextView)findViewById(R.id.passwordbox);
-        String password = password_view.getText().toString();
+        final String password = password_view.getText().toString();
         confirmed_password_view = (TextView)findViewById(R.id.confirmedpasswordbox);
         String confirmed_password = confirmed_password_view.getText().toString();
         profilepicture_view = (ImageButton) findViewById(R.id.profileimagebutton);
 
 
         final Firebase ref = new Firebase("https://sizzling-inferno-6141.firebaseio.com/Mapit");
+        ref.createUser(email, password, new Firebase.ResultHandler() {
 
-        ref.authWithPassword("jenny@example.com", "correcthorsebatterystaple",
+            @Override
+            public void onSuccess() {
+                Toast.makeText(getApplicationContext(), "created", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(FirebaseError firebaseError) {
+                Toast.makeText(getApplicationContext(), "User not created!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        ref.authWithPassword(email, password,
                 new Firebase.AuthResultHandler() {
 
                     @Override
@@ -105,58 +120,58 @@ public class SuscribeActivity extends AppCompatActivity implements View.OnClickL
                         // Authentication just completed successfully :)
                         Map<String, String> map = new HashMap<String, String>();
                         map.put("provider", authData.getProvider());
-                        if(authData.getProviderData().containsKey("displayName")) {
+                        map.put("userName", username);
+                        map.put("Password", password);
+                        if (authData.getProviderData().containsKey("displayName")) {
                             map.put("displayName", authData.getProviderData().get("displayName").toString());
                         }
 
-                        ref.child("users").child(authData.getUid()).setValue(map);
-                        Toast.makeText(getApplicationContext(), "Autentification!", Toast.LENGTH_SHORT).show();
+                        ref.child("Profiles").child(authData.getUid()).setValue(map);
                     }
 
                     @Override
                     public void onAuthenticationError(FirebaseError error) {
-                        Toast.makeText(getApplicationContext(),"ERROR!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "ERROR!", Toast.LENGTH_SHORT).show();
                         switch (error.getCode()) {
                             case FirebaseError.UNKNOWN_ERROR:
-                                Toast.makeText(getApplicationContext(),"ERROR 1 !",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "ERROR 1 !", Toast.LENGTH_SHORT).show();
                                 break;
                             case FirebaseError.USER_DOES_NOT_EXIST:
-                                Toast.makeText(getApplicationContext(),"ERROR 2 !",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "ERROR 2 !", Toast.LENGTH_SHORT).show();
                                 break;
                             case FirebaseError.EMAIL_TAKEN:
-                                Toast.makeText(getApplicationContext(),"ERROR 3 !",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "ERROR 3 !", Toast.LENGTH_SHORT).show();
                                 break;
                             case FirebaseError.NETWORK_ERROR:
-                                Toast.makeText(getApplicationContext(),"ERROR 4 !",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "ERROR 4 !", Toast.LENGTH_SHORT).show();
                                 break;
                             case FirebaseError.AUTHENTICATION_PROVIDER_DISABLED:
-                                Toast.makeText(getApplicationContext(),"ERROR 5 !",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "ERROR 5 !", Toast.LENGTH_SHORT).show();
                                 break;
                             case FirebaseError.INVALID_AUTH_ARGUMENTS:
-                                Toast.makeText(getApplicationContext(),"ERROR 6 !",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "ERROR 6 !", Toast.LENGTH_SHORT).show();
                                 break;
                             case FirebaseError.INVALID_CONFIGURATION:
-                                Toast.makeText(getApplicationContext(),"ERROR 7 !",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "ERROR 7 !", Toast.LENGTH_SHORT).show();
                                 break;
                             case FirebaseError.INVALID_CREDENTIALS:
-                                Toast.makeText(getApplicationContext(),"ERROR 8 !",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "ERROR 8 !", Toast.LENGTH_SHORT).show();
                                 break;
-
-
                             case FirebaseError.INVALID_EMAIL:
-                                Toast.makeText(getApplicationContext(),"ERROR 9 !",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "ERROR 9 !", Toast.LENGTH_SHORT).show();
                                 break;
                             case FirebaseError.INVALID_PASSWORD:
-                                Toast.makeText(getApplicationContext(),"ERROR 10 !",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "ERROR 10 !", Toast.LENGTH_SHORT).show();
                                 break;
                             case FirebaseError.INVALID_PROVIDER:
-                                Toast.makeText(getApplicationContext(),"ERROR 11 !",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "ERROR 11 !", Toast.LENGTH_SHORT).show();
                                 break;
                             default:
-                                Toast.makeText(getApplicationContext(),"ERROR X !",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "ERROR X !", Toast.LENGTH_SHORT).show();
                                 break;
                         }
                     }
+
                 });
 
 
@@ -168,8 +183,12 @@ public class SuscribeActivity extends AppCompatActivity implements View.OnClickL
         Firebase ref = new Firebase("https://sizzling-inferno-6141.firebaseio.com/Mapit/Profiles");
         ref.setValue();
         // a implementer, ajouter le profil a firebase
-        startActivity(new Intent("com.example.chagnoda.mapit.MainActivity"));
         */
+
+        // startLoginActivity au lieu de Main.
+        startActivity(new Intent("com.example.chagnoda.mapit.MainActivity"));
+
     }
+
 
 }
