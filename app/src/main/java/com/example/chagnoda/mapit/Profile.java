@@ -15,7 +15,9 @@ public class Profile {
    // public Groupe[] actualGroups;
    // public Groupe[] groupsHistory;
 
+    public Profile(){
 
+    }
     public Profile(String username, String email, String password) {
         this.username = username;
         this.email = email;
