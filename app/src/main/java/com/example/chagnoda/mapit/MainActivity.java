@@ -1,8 +1,12 @@
 package com.example.chagnoda.mapit;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -17,6 +21,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,28 +34,23 @@ import com.firebase.client.Firebase;
 
 public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
     View mapit_button;
-
-
+    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
+    MyLocationListener locationListener = new MyLocationListener();
+    LocationManager locationManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         mapit_button = findViewById(R.id.mapitbutton);
         mapit_button.setOnClickListener(this);
-        Firebase ref = new Firebase("https://sizzling-inferno-6141.firebaseio.com/Mapit");
-        AuthData authData = ref.getAuth();
-        Toast.makeText(getApplicationContext(), authData.getUid().toString(), Toast.LENGTH_SHORT).show();
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -112,19 +112,49 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
     @Override
     public void onClick(View v) {
-        // Il fat faire la permission pour acceder au a la localisation
-        int MY_PERMISSION_ACCESS_COURSE_LOCATION = 1000;
-        if ( ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+       GPSupdates();
 
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
-                    MY_PERMISSION_ACCESS_COURSE_LOCATION);
+    }
+
+
+    public void GPSupdates(){
+        // si la localisation n'est pas activer sur le telephone, l'application crash! 
+        // il reste a implementer un Alert.Dialog pour demander a l'usager d'activer la Localisation sur l'appareil si elle n'est pas active, voici un bon exemple(la fonction showAlert()): http://www.androidauthority.com/easy-app-material-design-tips-683092/
+        // permission request pour le Gps
+        int hasWriteContactsPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_CODE_ASK_PERMISSIONS);
+            return;
         }
-        LocationManager locationManager=    (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        MyLocationListener locationListener = new MyLocationListener();
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,locationListener);
+
+        // LocationManager service de geolocalisation
+            locationManager= (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+            // Recupere les coordonnees dans location, location.getLatitude() et location.getLongitude()
+            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            // Log.d sert a afficher dans le logcat, si on cherche My App dans la saisi de recherche en bas, on voit le message.(pour voir les coordonnees appuyer sur le bouton mapit(onClick()))
+            Log.d("My App:", "latitude: " + location.getLatitude() + "longitude: " + location.getLongitude());
+           // locationManager.removeUpdates(locationListener);
+
+    }
+
+
+    //fonction qui gere si un groupe existe
+    public void groupExist(Location location){
 
 
     }
+
+    // Fonction qui gere la creation de groupe
+    public void createGroup (Location location){
+        Groupe new_group = new Groupe("groupName",1,0,location);
+        Firebase ref = new Firebase("https://sizzling-inferno-6141.firebaseio.com/Mapit");
+        ref.child("Groups").child(new_group.getGroupeName()).setValue(new_group);
+    }
+
+
+
 
 
 
