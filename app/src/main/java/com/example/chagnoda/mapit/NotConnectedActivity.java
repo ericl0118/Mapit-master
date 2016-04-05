@@ -28,6 +28,8 @@ public class NotConnectedActivity extends AppCompatActivity implements View.OnCl
     }
 
 
+
+
     @Override
     public void onClick(View v) {
         switch(v.getId()){

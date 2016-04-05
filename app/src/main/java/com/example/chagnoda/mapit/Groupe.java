@@ -11,11 +11,9 @@ import android.graphics.Color;
  */
 public class Groupe {
 
-  
-
     private int groupesize;
 
-    private Color groupecolor;
+    private int groupecolor;
 
     private Location location;
 
@@ -39,6 +37,7 @@ public class Groupe {
 
         this.groupename = name;
         this.groupesize=size;
+        this.groupecolor=color;
         this.location=location;
         this.creator=creator;
         this.members.add(creator);
@@ -56,7 +55,7 @@ public class Groupe {
         return this.groupesize;
     }
 
-    public Color getGroupeColor(){
+    public int getGroupeColor(){
         return this.groupecolor;
     }
 

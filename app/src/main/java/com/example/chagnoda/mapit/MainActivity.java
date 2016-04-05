@@ -104,6 +104,12 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         } else if (id == R.id.nav_parametre) {
             startActivity(new Intent("com.example.chagnoda.mapit.SettingActivity"));
         }
+          else if (id == R.id.nav_logout){
+            final Firebase ref= new Firebase("https://sizzling-inferno-6141.firebaseio.com/Mapit");
+            ref.unauth();
+            Toast.makeText(getApplicationContext(), "You have logged out ", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent("com.example.chagnoda.mapit.LoginActivity"));
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

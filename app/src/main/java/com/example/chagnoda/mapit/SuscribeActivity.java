@@ -186,7 +186,7 @@ public class SuscribeActivity extends AppCompatActivity implements View.OnClickL
         */
 
         // startLoginActivity au lieu de Main.
-        startActivity(new Intent("com.example.chagnoda.mapit.MainActivity"));
+        startActivity(new Intent("com.example.chagnoda.mapit.LoginActivity"));
 
     }
 
