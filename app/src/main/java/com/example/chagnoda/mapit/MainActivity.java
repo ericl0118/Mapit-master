@@ -28,8 +28,12 @@ import android.view.View;
 import android.widget.Toast;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.GeoQuery;
+import com.firebase.geofire.GeoQueryEventListener;
 
-
+import java.io.Console;
 
 
 public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
@@ -123,7 +127,8 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     }
 
 
-    public void GPSupdates(){
+    public Location GPSupdates(){//changer type de retour a location pour l'utilise dans la methode create groupe
+
         // si la localisation n'est pas activer sur le telephone, l'application crash! 
         // il reste a implementer un Alert.Dialog pour demander a l'usager d'activer la Localisation sur l'appareil si elle n'est pas active, voici un bon exemple(la fonction showAlert()): http://www.androidauthority.com/easy-app-material-design-tips-683092/
         // permission request pour le Gps
@@ -131,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     REQUEST_CODE_ASK_PERMISSIONS);
-            return;
+            return null;
         }
 
         // LocationManager service de geolocalisation
@@ -141,6 +146,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
             Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             // Log.d sert a afficher dans le logcat, si on cherche My App dans la saisi de recherche en bas, on voit le message.(pour voir les coordonnees appuyer sur le bouton mapit(onClick()))
             Log.d("My App:", "latitude: " + location.getLatitude() + "longitude: " + location.getLongitude());
+            return location;
            // locationManager.removeUpdates(locationListener);
 
     }
@@ -148,20 +154,56 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
     //fonction qui gere si un groupe existe
     public void groupExist(Location location){
+        Console console = System.console();
+        Firebase ref = new Firebase("https://sizzling-inferno-6141.firebaseio.com/Mapit");
+        ref.child("Groupe").orderByChild("location").startAt();
 
+    }
+
+    public void findAllGroupeAroundMe(){
+        GeoLocation mylocation = new GeoLocation(GPSupdates().getLatitude(),GPSupdates().getLongitude());
+
+        Firebase ref = new Firebase("https://sizzling-inferno-6141.firebaseio.com/Mapit");
+        GeoFire gf = new GeoFire(ref);
+        //Query autour de 'mylocation' avec un rayon de 0.5 kilometers
+        GeoQuery geoQuery = gf.queryAtLocation(mylocation,0.5);
+    }
+
+
+    public void findAllGroupeAroundLocation(GeoLocation location){
+
+        Firebase ref = new Firebase("https://sizzling-inferno-6141.firebaseio.com/Mapit");
+        GeoFire gf = new GeoFire(ref);
+        //Query autour de 'mylocation' avec un rayon de 0.5 kilometers
+        GeoQuery geoQuery = gf.queryAtLocation(location,0.5);
 
     }
 
     // Fonction qui gere la creation de groupe
-    public void createGroup (Location location){
-        Groupe new_group = new Groupe("groupName",1,0,location);
+
+    // On doit metter a jour la location avec GeoFire chaque fois un groupe est cree
+    //Geofire est une base de donnee independant (comme la base qui gere le login)
+
+    public void createGroup (Profile creator){
+
+        Location location = GPSupdates();//acquérir location quand on cree un groupe
+
+        Groupe new_group = new Groupe("groupName",1,0,location,creator);//utilise cette location pour creer le groupe
+
         Firebase ref = new Firebase("https://sizzling-inferno-6141.firebaseio.com/Mapit");
-        ref.child("Groups").child(new_group.getGroupeName()).setValue(new_group);
+        ref.child("Groups").child(new_group.getGroupeName()).setValue(new_group);//enregister dans la base
+
+        GeoFire gf = new GeoFire(ref); //creation de geofire qui est la base de location
+
+        gf.setLocation(new_group.getGroupeName(),new GeoLocation(location.getLatitude(),location.getLongitude()));//enregister la location dans geofire , la cle est nom de groupe(optional)
+
     }
 
 
 
-
+//refs : https://github.com/firebase/geofire-java,
+//       https://www.firebase.com/blog/2013-09-25-location-queries-geofire.html
+//       https://www.firebase.com/blog/2014-06-23-geofire-two-point-oh.html
 
 
 }
