@@ -11,7 +11,7 @@ public class Profile {
     private Image profilepicture;
     private Profile[] friends;
     private Photo[] photos;
-    private String Password;
+    private String userID;
    // public Groupe[] actualGroups;
    // public Groupe[] groupsHistory;
 
@@ -22,14 +22,12 @@ public class Profile {
         this.username = username;
         this.email = email;
         this.password = password;
-        //this.profilepicture = profilePicture;
     }
-    public String getUserName(){
-        return this.username;
-    }
+    public String getUserName(){return this.username;}
     public String getPassword(){return this.password;}
     public String getEmail(){return this.email; }
     public Image getProfilePicture(){return this.profilepicture;}
+    public String getUserID(){ return this.userID;}
     public void setUserName(String newUserName) {this.username = newUserName;}
     public void setProfilePicture(Image newProfilePicture){this.profilepicture = newProfilePicture;}
 

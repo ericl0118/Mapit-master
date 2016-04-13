@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
     }
 
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
 
     public void GPSupdates(){
-        // si la localisation n'est pas activer sur le telephone, l'application crash! 
+        // si la localisation n'est pas activer sur le telephone, l'application crash!
         // il reste a implementer un Alert.Dialog pour demander a l'usager d'activer la Localisation sur l'appareil si elle n'est pas active, voici un bon exemple(la fonction showAlert()): http://www.androidauthority.com/easy-app-material-design-tips-683092/
         // permission request pour le Gps
         int hasWriteContactsPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);

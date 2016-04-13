@@ -14,10 +14,10 @@ public class Supergroupe extends Groupe {
     private ArrayList<Groupe> channels;
 
 
-    public Supergroupe(String name , int size , int color , Location location , Profile creator){
+    public Supergroupe(String name , int size , int color , Location location){
 
-    super(name ,size ,color , location ,creator);
-    Groupe general = new Groupe("general",50, Color.GREEN,location,creator);
+    super(name ,size ,color , location );
+    Groupe general = new Groupe("general",50, Color.GREEN,location);
     this.channels.add(this);
     }
 

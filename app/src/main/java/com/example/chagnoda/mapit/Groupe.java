@@ -19,10 +19,6 @@ public class Groupe {
 
     private Location location;
 
-    private double latitude;
-
-    private double longitude;
-
     private Profile creator;
 
     private ArrayList<Profile> members;
@@ -35,7 +31,8 @@ public class Groupe {
 
     public Groupe(){}
 
-    public Groupe(String name , int size , int color , Location location , Profile creator){
+    // Profile creator retirer des parametres du constructeur a fin de debuggage a remettre plus tard
+    public Groupe(String name , int size , int color , Location location){
 
         this.groupename = name;
         this.groupesize=size;
