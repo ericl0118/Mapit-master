@@ -8,12 +8,16 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -32,21 +36,24 @@ public class FriendListActivity extends AppCompatActivity{
         setContentView(R.layout.activity_friend_list);
         listView = (ListView)findViewById(R.id.FriendList);
         arrayList = new ArrayList<>();
-        //adapter = new ArrayAdapter<String>(this,R.layout.activity_friend_list,R.id.FriendList,arrayList);
-        //listView.setAdapter(adapter);
+        Firebase ref1 = new Firebase("https://sizzling-inferno-6141.firebaseio.com/Mapit");
+        final AuthData authData = ref1.getAuth();
+
         Firebase ref = new Firebase("https://sizzling-inferno-6141.firebaseio.com/Mapit/Profiles");
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                // Toast.makeText(getApplicationContext(), snapshot.getValue().toString(), Toast.LENGTH_SHORT).show();
-                // snapshot.getValue() retrieve toutes les profiles (Dans les photos en piece jointe c'est le plus gros "Toast")
 
                 for (DataSnapshot profileSnapshot : snapshot.getChildren()) {
                     Profile copy_profile = profileSnapshot.getValue(Profile.class);
-                    String username = copy_profile.getUserName();
-                    arrayList.add(username);
                     Log.d("My App: ", copy_profile.getUserName());
+                    if(copy_profile.getUserID() == authData.getUid()){
+                        ArrayList<String> friendlist = copy_profile.getFriendsList();
+                        for(int i=0; i<friendlist.size();i++) {
+                            arrayList.add(friendlist.get(i));
+                        }
+                    }
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(FriendListActivity.this, android.R.layout.select_dialog_multichoice, arrayList);
                 listView.setAdapter(adapter);
