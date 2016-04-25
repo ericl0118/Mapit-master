@@ -25,7 +25,6 @@ import java.util.Map;
  */
 public class FriendListActivity extends AppCompatActivity{
     private ArrayList<String> arrayList;
-    private ArrayAdapter<String> adapter;
     ListView listView;
 
 
@@ -46,14 +45,7 @@ public class FriendListActivity extends AppCompatActivity{
             public void onDataChange(DataSnapshot snapshot) {
 
                 for (DataSnapshot profileSnapshot : snapshot.getChildren()) {
-                    Profile copy_profile = profileSnapshot.getValue(Profile.class);
-                    Log.d("My App: ", copy_profile.getUserName());
-                    if(copy_profile.getUserID() == authData.getUid()){
-                        ArrayList<String> friendlist = copy_profile.getFriendsList();
-                        for(int i=0; i<friendlist.size();i++) {
-                            arrayList.add(friendlist.get(i));
-                        }
-                    }
+
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(FriendListActivity.this, android.R.layout.select_dialog_multichoice, arrayList);
                 listView.setAdapter(adapter);

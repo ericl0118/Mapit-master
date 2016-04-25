@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.location.Location;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by chengli on 2016-03-24.
@@ -14,11 +15,11 @@ public class Supergroupe extends Groupe {
     private ArrayList<Groupe> channels;
 
 
-    public Supergroupe(String name , int size , int color , Location location){
+    public Supergroupe(String name , int size , int color , double latitude ,double longitude, String creator, ArrayList<String> members, ArrayList<Discussion> discussions,Date timeoflastmessage){
 
-    super(name ,size ,color , location );
-    Groupe general = new Groupe("general",50, Color.GREEN,location);
-    this.channels.add(this);
+        super(name ,size ,color ,  latitude , longitude ,creator,members,discussions,timeoflastmessage);
+        Groupe general = new Groupe("general",50, Color.GREEN, latitude , longitude,creator,members,discussions,timeoflastmessage);
+        this.channels.add(this);
     }
 
 

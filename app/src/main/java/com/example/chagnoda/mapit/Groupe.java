@@ -11,17 +11,17 @@ import android.graphics.Color;
  */
 public class Groupe {
 
-  
-
     private int groupesize;
 
-    private Color groupecolor;
+    private int groupecolor;
 
-    private Location location;
+    private double latitude;
 
-    private Profile creator;
+    private double longitude;
 
-    private ArrayList<Profile> members;
+    private String creator;
+
+    private ArrayList<String> members;
 
     private Date timeoflastmessage;
 
@@ -31,17 +31,17 @@ public class Groupe {
 
     public Groupe(){}
 
-    // Profile creator retirer des parametres du constructeur a fin de debuggage a remettre plus tard
-    public Groupe(String name , int size , int color , Location location){
+    public Groupe(String name , int size , int color , double latitude ,double longitude, String creator, ArrayList<String> members, ArrayList<Discussion> discussions,Date timeoflastmessage){
 
         this.groupename = name;
         this.groupesize=size;
-        this.location=location;
+        this.groupecolor=color;
+        this.latitude=latitude;
+        this.longitude=longitude;
         this.creator=creator;
-        this.members.add(creator);
-        String s = "welcome to the groupe : "+this.groupename+" , the creator of groupe is : ";
-        this.discussions.add(new Discussion(this.creator , s, Calendar.getInstance().getTime()));
-        this.timeoflastmessage = discussions.get(discussions.size()-1).getTimeSend();
+        this.members = members;
+        this.discussions = discussions;
+        this.timeoflastmessage = timeoflastmessage;
 
     }
 
@@ -53,19 +53,23 @@ public class Groupe {
         return this.groupesize;
     }
 
-    public Color getGroupeColor(){
+    public int getGroupeColor(){
         return this.groupecolor;
     }
 
-    public ArrayList<Profile> getMemberList(){
+    public ArrayList<String> getMemberList(){
         return this.members;
     }
 
-    public Location getGroupeLocation(){
-        return this.location;
+    public double getGroupeLatitude(){
+        return this.latitude;
     }
 
-    public Profile getCreator(){
+    public double getGroupeLongitude(){
+        return this.longitude;
+    }
+
+    public String getCreator(){
         return this.creator;
     }
 
@@ -77,7 +81,7 @@ public class Groupe {
         this.discussions.add(d);
     }
 
-    public void addMemberToGroupe(Profile p){
+    public void addMemberToGroupe(String p){
         this.members.add(p);
     }
 

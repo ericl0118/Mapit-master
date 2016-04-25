@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -23,6 +24,7 @@ import com.firebase.client.FirebaseError;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -107,9 +109,11 @@ public class SuscribeActivity extends AppCompatActivity implements View.OnClickL
             public void onSuccess() {
                 Toast.makeText(getApplicationContext(), " Your account has been created!", Toast.LENGTH_SHORT).show();
                 AuthData authData = ref.getAuth();
-                Profile new_user = new Profile(username,email, password);
+                HashMap<String,String> friendlist = new HashMap<String,String>();
+                friendlist.put("None","None");
+                Profile new_user = new Profile(username,email, password,authData.getUid(),friendlist);
                 ref.child("Profiles").child(username).setValue(new_user);
-                startActivity(new Intent("com.example.chagnoda.mapit.FriendListActivity"));
+                startActivity(new Intent("com.example.chagnoda.mapit.MainActivity"));
 
             }
             @Override

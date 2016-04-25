@@ -1,7 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/mapitbutton"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:text="Mapit"
+        android:background="@drawable/mapit_button"
+        android:layout_marginLeft="0dp"
+        android:textColor="#ffffff"
+        android:textSize="50dp"
+        android:textStyle="normal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="85dp"
+        style="@style/Base.TextAppearance.AppCompat.Caption" />
 
-</LinearLayout>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="Input your email"
+        android:ems="10"
+        android:id="@+id/loginname"
+        android:textColor="#bab9b9"
+        android:textIsSelectable="false"
+        android:layout_below="@+id/mapitbutton"
+        android:layout_marginTop="43dp"
+        android:layout_alignEnd="@+id/mapitbutton"
+        android:layout_alignStart="@+id/loginpassword" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:hint="Input your password"
+        android:ems="10"
+        android:id="@+id/loginpassword"
+        android:textColor="#bab9b9"
+        android:textIsSelectable="false"
+        android:layout_below="@+id/loginname"
+        android:layout_alignStart="@+id/mapitbutton"
+        android:layout_alignEnd="@+id/mapitbutton" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter Mapit"
+        android:id="@+id/loginbutton"
+        android:singleLine="true"
+        android:layout_below="@+id/loginpassword"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>
