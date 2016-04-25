@@ -20,8 +20,8 @@
             android:title="settings" />
         <item
             android:id="@+id/nav_logout"
-            android:icon="@drawable/common_google_signin_btn_icon_dark_normal"
-            android:title="logout"/>
+            android:icon="@drawable/ic_menu_manage"
+            android:title="settings" />
     </group>
 
 </menu>

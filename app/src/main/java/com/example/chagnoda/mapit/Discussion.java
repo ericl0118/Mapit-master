@@ -11,11 +11,11 @@ public class Discussion {
 
     private Date timesend;
 
-    private Profile sender;
+    private String sender;
 
     public Discussion(){}
 
-    public Discussion(Profile sender , Object content , Date time){
+    public Discussion(String sender , Object content , Date time){
 
         this.sender = sender;
 
@@ -32,7 +32,7 @@ public class Discussion {
         return this.content;
     }
 
-    public Profile getSender(){
+    public String getSender(){
         return this.sender;
     }
 
